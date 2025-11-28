@@ -1,0 +1,4 @@
+# Create requirements.txt and add Streamlit + Pillow
+echo "streamlit==1.27.0
+Pillow==9.5.0" > requirements.txt
+
