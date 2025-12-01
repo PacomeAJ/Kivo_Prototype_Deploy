@@ -1,30 +1,7 @@
+# app.py
 import os
 import streamlit as st
 from PIL import Image
-
-# -----------------------------
-# APP CONFIG
-# -----------------------------
-st.set_page_config(page_title="KIVO AI", page_icon="🤖", layout="centered")
-
-# -----------------------------
-# SIDEBAR INSTRUCTIONS
-# -----------------------------
-st.sidebar.header("KIVO Demo Instructions")
-st.sidebar.markdown("""
-- Select a question below to see KIVO's response.
-- This is a pre-written demo using sample data.
-- Judges can see decision, reasoning, confidence, source, and supporting evidence.
-""")
-
-# -----------------------------
-# ADDITIONAL NOTE
-# -----------------------------
-st.sidebar.header("Additional Information")
-st.sidebar.markdown("""
-- This demo showcases how KIVO simplifies complex processes, enhances accuracy, and empowers businesses to make faster, data-driven decisions. Experience the future of intelligent billing today.
-- For any additional questions or support, feel free to contact us.
-""")
 
 # -----------------------------
 # LOAD LOGO
@@ -34,24 +11,58 @@ if os.path.exists(logo_path):
     logo = Image.open(logo_path)
 else:
     logo = None
-    st.warning("⚠️ KIVO logo not found. Make sure it's in assets/kivo_logo.png")
+    st.warning("⚠️ KIVO logo not found. Place it inside assets/kivo_logo.png")
 
 # -----------------------------
-# HEADER WITH LOGO INLINE
+# PAGE SETUP
 # -----------------------------
-if logo:
-    col1, col2 = st.columns([1, 4])  # Adjust ratio: 1 for logo, 4 for text
-    with col1:
-        st.image(logo, width=250)  # Adjust width as needed
-    with col2:
-        st.markdown("## KIVO: Instant Billing Intelligence")
-else:
-    st.markdown("## KIVO: Instant Billing Intelligence")
-
-st.write("Ask KIVO any billing question from the demo below:")
+st.set_page_config(
+    page_title="KIVO Instant Billing Intelligence",
+    page_icon="💠",
+    layout="wide"
+)
 
 # -----------------------------
-# DEMO QUESTIONS & PRE-WRITTEN ANSWERS
+# SIDEBAR (KIVO DEMO INSTRUCTIONS)
+# -----------------------------
+with st.sidebar:
+    if logo:
+        st.image(logo, width=180)
+
+    st.header("KIVO Demo Instructions")
+    st.markdown("""
+    - Select a question below to see KIVO's response.  
+    - This is a pre-written demo using sample data.  
+    - Judges can see decision, reasoning, confidence, source, and supporting evidence.  
+    """)
+
+    st.header("Additional Information")
+    st.markdown("""
+    - This demo showcases how KIVO simplifies complex processes, enhances accuracy,  
+      and empowers businesses to make faster, data-driven decisions.  
+    - Experience the future of intelligent billing today.  
+    """)
+
+# -----------------------------
+# HEADER (Blue bar like screenshot)
+# -----------------------------
+st.markdown(
+    """
+    <div style="
+        background-color:#2B6CB0;
+        padding: 18px;
+        border-radius: 8px;
+        display:flex;
+        align-items:center;
+    ">
+        <h2 style="color:white; margin:0;">KIVO – Instant Billing Intelligence</h2>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# -----------------------------
+# DEMO QUESTIONS & ANSWERS
 # -----------------------------
 demo_questions = [
     {
@@ -68,70 +79,84 @@ demo_questions = [
         "question": "Is the reweigh from CarrierZ valid for load #889900?",
         "answer": {
             "Decision": "Approve",
-            "Reason": "CarrierZ submitted a certified weight ticket that matches the freight description and NMFC weight guidelines.",
+            "Reason": "CarrierZ submitted a certified weight ticket that matches the freight description.",
             "Confidence": "94%",
             "Source": "CarrierZ_WeightCertificate.pdf — Seal 772199; BOL.pdf — Line Item 3",
-            "Supporting Evidence": ["Original Declared Weight: 4,980 lbs", "Carrier Reweigh Weight: 5,040 lbs", "Difference: +60 lbs (1.2% variance)"]
+            "Supporting Evidence": ["Declared: 4,980 lbs", "Reweigh: 5,040 lbs", "+60 lbs (1.2% variance)"]
         }
     },
     {
         "question": "CarrierABC changed the freight from Class 85 to Class 250 for load #334455. Should we dispute this?",
         "answer": {
             "Decision": "Dispute",
-            "Reason": "Density and NMFC classification do not support a class increase from 85 to 250.",
+            "Reason": "Density and NMFC classification do not support a class increase.",
             "Confidence": "97%",
             "Source": "NMFC_DensityTable.pdf; CarrierABC_Tariff.pdf",
-            "Supporting Evidence": ["Shipment characteristics align with Class 85", "No commodity attributes justify Class 250", "Increase results in inflated charge"]
+            "Supporting Evidence": ["Fits Class 85", "Class 250 unjustified", "Charge inflated"]
         }
     }
 ]
 
 # -----------------------------
-# USER INTERFACE (Buttons for Questions)
+# USER INSTRUCTION TEXT
 # -----------------------------
-st.subheader("Choose a question to ask KIVO:")
+st.write("### Ask KIVO any billing question from the demo below:")
 
+# -----------------------------
+# DROPDOWN SELECT BOX WITH FIRST QUESTION PRE-SELECTED
+# -----------------------------
+questions_list = [q["question"] for q in demo_questions]
+selected_question = st.selectbox(
+    "Select a scenario:",
+    questions_list,
+    index=0  # Pre-select the first question
+)
+
+# Clear previous chat_history to show only current selection
+st.session_state.chat_history = [{"sender": "user", "text": selected_question}]
+
+# -----------------------------
+# FIND ANSWER FOR SELECTED QUESTION
+# -----------------------------
 for q in demo_questions:
-    if st.button(q["question"]):  # Create a button for each question
+    if q["question"] == selected_question:
         answer = q["answer"]
-        
-        # -----------------------------
-        # Highlighting specific words in response
-        # -----------------------------
-        highlighted_answer = answer["Decision"]
-        highlighted_answer = highlighted_answer.replace("Deny", f"<span style='color:red;'>❌ Deny</span>")
-        highlighted_answer = highlighted_answer.replace("Approve", f"<span style='color:green;'>✅ Approve</span>")
-        highlighted_answer = highlighted_answer.replace("Dispute", f"<span style='color:blue;'>ℹ️ Dispute</span>")
-
-        # -----------------------------
-        # Display Answer
-        # -----------------------------
-        st.subheader("KIVO Answer")
-        
-        # Highlighted decision
-        st.markdown(f"**Decision:** {highlighted_answer}", unsafe_allow_html=True)
-        
-        # Display other details
-        for k, v in answer.items():
-            if k != "Decision":
-                if isinstance(v, list):
-                    st.write(f"**{k}:**")
-                    for item in v:
-                        st.write(f"- {item}")
-                else:
-                    st.write(f"**{k}:** {v}")
+        break
 
 # -----------------------------
-# THANK YOU SECTION / CALL TO ACTION
+# HIGHLIGHT DECISION
 # -----------------------------
+decision = answer["Decision"]
+if decision == "Deny":
+    decision = "<span style='color:red;'>❌ Deny</span>"
+elif decision == "Approve":
+    decision = "<span style='color:green;'>✅ Approve</span>"
+else:
+    decision = "<span style='color:blue;'>ℹ️ Dispute</span>"
+
+# -----------------------------
+# DISPLAY KIVO ANSWER
+# -----------------------------
+st.subheader("KIVO Answer")
+st.markdown(f"**Decision:** {decision}", unsafe_allow_html=True)
+
+for k, v in answer.items():
+    if k != "Decision":
+        if isinstance(v, list):
+            st.write(f"**{k}:**")
+            for item in v:
+                st.write(f"- {item}")
+        else:
+            st.write(f"**{k}:** {v}")
+
+# -----------------------------
+# FOOTER / THANK YOU
+# -----------------------------
+st.write("---")
 st.markdown("""
-    ### Thank you for experiencing KIVO AI!
+### Thank you for experiencing **KIVO AI**
 
-    We appreciate your time in exploring KIVO, and we'd love to hear your thoughts on the demo.
+Please share your feedback to help us improve:
 
-    Please share your feedback with us to help us improve. 
-
-    [Jean Anno - KIVO Prototype AI Demo - Feedback - Fill out form](https://forms.office.com/Pages/ResponsePage.aspx?id=jkIKfbCgsOe3NbLc3ZV1eXjLp60xVbZMiGUKgfxJBA5URE5JWFIZSFUxUENTRUIoUThCMTAxWTVHQS4u)  
-
-    Stay tuned for more updates, and thank you for your support!
+👉 [**Submit Feedback**](https://forms.office.com/Pages/ResponsePage.aspx?id=jkIKfbCgsOe3NbLc3ZV1eXjLp60xVbZMiGUKgfxJBA5URE5JWFIZSFUxUENTRUIoUThCMTAxWTVHQS4u)
 """)

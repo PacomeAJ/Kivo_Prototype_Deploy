@@ -1,0 +1,167 @@
+/* ---------------- BODY ---------------- */
+body {
+    background-color: #f5f7fb;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ---------------- SIDEBAR ---------------- */
+.sidebar .sidebar-content {
+    padding: 20px;
+}
+
+.sidebar-header {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.sidebar-item {
+    padding: 14px 10px;
+    font-size: 16px;
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.sidebar-item:hover {
+    background: #e8eefc;
+}
+
+.logout {
+    margin-top: 40px;
+    padding: 10px;
+    color: #d00;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ---------------- TOP NAVIGATION ---------------- */
+.top-nav {
+    background: #0056d6;
+    color: white;
+    padding: 14px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 15px 15px;
+    margin-bottom: 20px;
+}
+
+.kivo-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
+
+.nav-title span {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.search-bar {
+    padding: 10px 15px;
+    width: 260px;
+    border-radius: 25px;
+    border: none;
+}
+
+/* ---------------- CHAT WINDOW ---------------- */
+.chat-window {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.date-label {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #999;
+}
+
+.bubble {
+    padding: 15px 20px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+    max-width: 80%;
+    line-height: 1.4;
+    font-size: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.user-bubble {
+    background: #2a74ff;
+    color: white;
+    margin-left: auto;
+    border-radius: 18px 18px 0 18px;
+}
+
+.kivo-bubble {
+    background: #eef1f7;
+    margin-right: auto;
+    border-radius: 18px 18px 18px 0;
+}
+
+.green-dot {
+    color: green;
+    font-size: 20px;
+}
+
+.red-dot {
+    color: red;
+    font-size: 14px;
+}
+
+.source {
+    font-size: 13px;
+    color: #555;
+}
+
+/* ---------------- CHAT INPUT ---------------- */
+.chat-input-bar {
+    display: flex;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.chat-input {
+    border: none;
+    flex: 1;
+    padding: 10px;
+    border-radius: 30px;
+    outline: none;
+}
+
+.send-btn {
+    background: #2a74ff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* ---------------- RIGHT DOCUMENT PANEL ---------------- */
+.doc-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+}
+
+.doc-item {
+    padding: 8px 0;
+    font-size: 15px;
+}
+
+.doc-item.green {
+    color: green;
+    font-weight: bold;
+}
