@@ -154,9 +154,13 @@ for k, v in answer.items():
 # -----------------------------
 st.write("---")
 st.markdown("""
-### Thank you for experiencing **KIVO AI**
+    <h3>Thank you for experiencing <b>KIVO AI</b></h3>
 
-Please share your feedback to help us improve:
+    <p>Please share your feedback to help us improve:</p>
 
-👉 [**Submit Feedback**](https://forms.office.com/Pages/ResponsePage.aspx?id=JkIKfbCgs0e3NbLc3ZV1eXjLp60xVbZMiGUKgfxJBA5UOFVFMkRGQkZHVU41M1VDNTNPV0E2T0E2T01NMS4u)
-""")
+    👉 <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=JkIKfbCgs0e3NbLc3ZV1eXjLp60xVbZMiGUKgfxJBA5UOFVFMkRGQkZHVU41M1VDNTNPV0E2T01NMS4u" 
+          target="_blank" 
+          style="font-size:18px; font-weight:600; color:#2B6CB0; text-decoration:none;">
+        Submit Feedback
+       </a>
+""", unsafe_allow_html=True)
