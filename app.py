@@ -153,7 +153,7 @@ st.markdown("""
 <h3>Thank you for experiencing <b>KIVO AI</b></h3>
 <p>Please share your feedback:<br> <i>(RXO login required)</i></p>
 <div style="margin-top:15px;">
-    <a href="https://forms.cloud.microsoft/r/6ii556aqtr" target="_blank" 
+    <a href="https://forms.cloud.microsoft/r/6ii556aqtR" target="_blank" 
        style="background-color:#2B6CB0; color:white; padding:12px 24px; border-radius:6px; text-decoration:none; font-size:16px; font-weight:600;">
        Submit Feedback
     </a>
