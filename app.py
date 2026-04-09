@@ -25,16 +25,24 @@ else:
     st.warning("⚠️ KIVO logo not found. Place it inside assets/kivo_logo.png")
 
 # -----------------------------
-# SIDEBAR
+# SIDEBAR (with full KIVO demo instructions)
 # -----------------------------
 with st.sidebar:
     if logo:
         st.image(logo, width=180)
+
     st.header("KIVO Demo Instructions")
     st.markdown("""
-    - Select a question below
-    - View AI decision + reasoning
-    - Submit feedback at the bottom
+    - Select a question below to see KIVO's response.  
+    - This is a pre-written demo using sample data.  
+    - Judges can see decision, reasoning, confidence, source, and supporting evidence.  
+    """)
+
+    st.header("Additional Information")
+    st.markdown("""
+    - This demo showcases how KIVO simplifies complex processes, enhances accuracy,  
+      and empowers businesses to make faster, data-driven decisions.  
+    - Experience the future of intelligent billing today.  
     """)
 
 # -----------------------------
